@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include "vaapipicture.h"
+#include "log.h"
 #include "common/vaapiutils.h"
 
 /* picture class implementation */
