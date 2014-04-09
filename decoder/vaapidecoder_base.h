@@ -23,11 +23,6 @@
 #ifndef vaapidecoder_base_h
 #define vaapidecoder_base_h
 
-/* Keep config.h here avoiding display declaration conflict  */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "common/log.h"
 #include "interface/VideoDecoderInterface.h"
 #include "vaapisurfacebuf_pool.h"
@@ -36,9 +31,7 @@
 #include <va/va_tpi.h>
 #ifdef HAVE_VA_X11
 #include <va/va_x11.h>
-#endif
-
-#ifndef HAVE_VA_X11
+#else
 typedef unsigned int Display;
 #endif
 
