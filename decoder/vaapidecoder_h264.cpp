@@ -64,6 +64,11 @@ static VAProfile getH264VAProfile(H264PPS * pps)
             (pps->num_slice_groups_minus1 == 0 &&
              !pps->redundant_pic_cnt_present_flag))
             profile = VAProfileH264ConstrainedBaseline;
+        else {
+            ERROR("h264 baseline profile is not supported");
+            profile = VAProfileNone;
+        }
+
         break;
     case 77:
     case 88:
@@ -999,7 +1004,9 @@ Decode_Status VaapiDecoderH264::ensureContext(H264PPS * pps)
     }
 
     VideoConfigBuffer *config = &m_configBuffer;
-    parsedProfile = getH264VAProfile(pps);
+    if ((parsedProfile = getH264VAProfile(pps)) == VAProfileNone)
+        return DECODE_FAIL;
+
     if (parsedProfile != m_configBuffer.profile) {
         DEBUG("H264: profile changed: old = %d, new = %d, \n",
               m_configBuffer.profile, parsedProfile);
