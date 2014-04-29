@@ -1150,8 +1150,10 @@ bool VaapiDecoderH264::markingPicture(VaapiPictureH264 * pic)
         return false;
 
     if (m_prevPicHasMMCO5) {
+        printf("==========m_prevPicHasMMCO5");
         m_frameNum = 0;
         m_frameNumOffset = 0;
+        m_prevFrame = NULL;
     }
 
     m_prevPicStructure = pic->m_structure;
@@ -1161,11 +1163,18 @@ bool VaapiDecoderH264::markingPicture(VaapiPictureH264 * pic)
 
 bool VaapiDecoderH264::storeDecodedPicture(VaapiPictureH264 * pic)
 {
+    static int num = 0;
+    printf("--->num : %d\n", num++);
     VaapiFrameStore *frameStore;
+
+    if (m_prevFrame) {
+        printf("<1.1>m_prevFrame : %p\n", m_prevFrame);
+        printf("<1.2>m_prevFrame->m_structure : %u\n", m_prevFrame->m_structure);
+    }
 #if 1
     // Check if picture is the second field and the first field is still in DPB
     if (m_prevFrame && !m_prevFrame->hasFrame()) {
-        printf("m_prevFrame->m_structure : %u\n",
+        printf("<3>m_prevFrame->m_structure : %u\n",
                m_prevFrame->m_structure);
         RETURN_VAL_IF_FAIL(m_prevFrame->m_numBuffers == 1, false);
 
@@ -1187,6 +1196,10 @@ bool VaapiDecoderH264::storeDecodedPicture(VaapiPictureH264 * pic)
 
     if (m_prevFrame && m_prevFrame->hasFrame())
         m_currentPicture = NULL;
+    if (frameStore) {
+        printf("<2.1>frameStore : %p\n", frameStore);
+        printf("<2.2>frameStore->m_structure : %u\n", frameStore->m_structure);
+    }
 
     return true;
 }
