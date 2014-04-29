@@ -1169,7 +1169,8 @@ bool VaapiDecoderH264::storeDecodedPicture(VaapiPictureH264 * pic)
 
     if (m_prevFrame) {
         printf("<1.1>m_prevFrame : %p\n", m_prevFrame);
-        printf("<1.2>m_prevFrame->m_structure : %u\n", m_prevFrame->m_structure);
+        printf("<1.2>m_prevFrame->m_structure : %u\n",
+               m_prevFrame->m_structure);
     }
 #if 1
     // Check if picture is the second field and the first field is still in DPB
@@ -1198,7 +1199,8 @@ bool VaapiDecoderH264::storeDecodedPicture(VaapiPictureH264 * pic)
         m_currentPicture = NULL;
     if (frameStore) {
         printf("<2.1>frameStore : %p\n", frameStore);
-        printf("<2.2>frameStore->m_structure : %u\n", frameStore->m_structure);
+        printf("<2.2>frameStore->m_structure : %u\n",
+               frameStore->m_structure);
     }
 
     return true;
