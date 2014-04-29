@@ -650,10 +650,10 @@ bool VaapiDecoderH264::initPicture(VaapiPictureH264 * picture,
     else {
         VAAPI_PICTURE_FLAG_SET(picture, VAAPI_PICTURE_FLAG_INTERLACED);
         if (!sliceHdr->bottom_field_flag) {
-            printf("===========THIS IS VAAPI_PICTURE_STRUCTURE_TOP_FIELD\N");
+            printf
+                ("===========THIS IS VAAPI_PICTURE_STRUCTURE_TOP_FIELD\N");
             picture->m_picStructure = VAAPI_PICTURE_STRUCTURE_TOP_FIELD;
-        }
-        else
+        } else
             picture->m_picStructure = VAAPI_PICTURE_STRUCTURE_BOTTOM_FIELD;
     }
     picture->m_structure = picture->m_picStructure;
@@ -1162,17 +1162,18 @@ bool VaapiDecoderH264::markingPicture(VaapiPictureH264 * pic)
 bool VaapiDecoderH264::storeDecodedPicture(VaapiPictureH264 * pic)
 {
     VaapiFrameStore *frameStore;
-    #if 1
+#if 1
     // Check if picture is the second field and the first field is still in DPB
     if (m_prevFrame && !m_prevFrame->hasFrame()) {
-        printf("m_prevFrame->m_structure : %u\n", m_prevFrame->m_structure);
+        printf("m_prevFrame->m_structure : %u\n",
+               m_prevFrame->m_structure);
         RETURN_VAL_IF_FAIL(m_prevFrame->m_numBuffers == 1, false);
 
         m_prevFrame->addPicture(m_currentPicture);
         m_currentPicture = NULL;
         return true;
     }
-    #endif
+#endif
 
     // Create new frame store, and split fields if necessary
     frameStore = new VaapiFrameStore(pic);
